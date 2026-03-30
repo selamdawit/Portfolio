@@ -1,6 +1,6 @@
 /*
 
-Cleaning Data in SQL Queries – MoMA Artists Table
+Cleaning Data in SQL Queries – MoMA Artists Table 1
 
 */
 
