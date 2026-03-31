@@ -59,7 +59,6 @@ UPDATE artists_raw
 SET Gender = LOWER(Gender)
 WHERE Gender IS NOT NULL;
 
---------------------------------------------------------------------------------------------------------------------------
 
 -- Handle Missing Year Values
 
@@ -74,12 +73,12 @@ WHERE EndDate = 0;
 
 
 
-
 /*
 
 Cleaning Data in SQL Queries – MoMA Artworks Table 2
 
 */
+
 
 
 CREATE TABLE artworks_raw (
@@ -115,7 +114,6 @@ CREATE TABLE artworks_raw (
   `Duration (sec.)` TEXT
 );
 
---------------------------------------------------------------------------------------------------------------------------
 
 -- Load data from CSV
 
@@ -128,7 +126,6 @@ ENCLOSED BY '"'
 LINES TERMINATED BY '\n'
 IGNORE 1 ROWS;
 
---------------------------------------------------------------------------------------------------------------------------
 
 -- Remove invalid and duplicate rows before adding primary key
 
@@ -138,7 +135,6 @@ WHERE ObjectID IS NULL
    OR ObjectID = 0
    OR ObjectID IN (15, 18);
 
---------------------------------------------------------------------------------------------------------------------------
 
 -- Add primary key
 
@@ -146,7 +142,6 @@ WHERE ObjectID IS NULL
 ALTER TABLE artworks_raw
 ADD PRIMARY KEY (ObjectID);
 
---------------------------------------------------------------------------------------------------------------------------
 
 -- Trim spaces and replace blanks with NULL
 
@@ -199,7 +194,6 @@ SET
   BeginDate = NULLIF(TRIM(BeginDate), '()'),
   EndDate = NULLIF(TRIM(EndDate), '()');
 
---------------------------------------------------------------------------------------------------------------------------
 
 -- Standardise Cataloged values
 
@@ -211,7 +205,6 @@ SET Cataloged = CASE
   ELSE Cataloged
 END;
 
---------------------------------------------------------------------------------------------------------------------------
 
 -- Remove quotation marks
 
@@ -220,7 +213,6 @@ UPDATE artworks_raw
 SET OnView = REPLACE(OnView, '"', '')
 WHERE OnView IS NOT NULL;
 
---------------------------------------------------------------------------------------------------------------------------
 
 -- Replace invalid date 
 
@@ -230,13 +222,11 @@ SET BeginDate = NULL
 WHERE BeginDate = '(0)';
 
 
-
 UPDATE artworks_raw
 SET EndDate = NULL
 WHERE EndDate = '(0)'
    OR EndDate = '(0) (0)';
 
---------------------------------------------------------------------------------------------------------------------------
 
 -- Convert measurement columns (rounded to 2 decimal places)
 
