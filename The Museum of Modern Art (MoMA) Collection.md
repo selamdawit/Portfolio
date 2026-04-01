@@ -230,6 +230,8 @@ ORDER BY total_artists DESC
 LIMIT 10;
 ````
 
+**Answer:**
+
 <img width="282" height="193" alt="Image" src="https://github.com/user-attachments/assets/1ed5e67a-934c-4f9b-b787-16635827bd57" />
 <br>
 <br>
@@ -252,6 +254,10 @@ ORDER BY total_artworks DESC
 LIMIT 10;
 ````
 
+**Answer:**
+
+
+
 **What are the most common mediums in Painting & Sculpture department?**
 
 ````sql
@@ -265,6 +271,10 @@ GROUP BY Medium
 ORDER BY total_artworks DESC
 LIMIT 10;
 ````
+
+**Answer:**
+
+<img width="389" height="217" alt="Image" src="https://github.com/user-attachments/assets/3663ba43-09ed-49f4-8b8d-5cabb238934b" />
 
 <br>
 <br>
