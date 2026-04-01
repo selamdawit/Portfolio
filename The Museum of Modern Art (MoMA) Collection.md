@@ -210,4 +210,23 @@ There are 665 artists with artworks currently on display.
 * 191 (29%) are female
 * 1 (0.2%) is recorded as a transgender woman
 * 41 (6%) have no gender recorded
+  
+<br>
+<br>
 
+### 8. Which nationalities are most represented among artists on view?
+
+````sql
+SELECT
+  artists_raw.Nationality,
+  COUNT(DISTINCT artists_raw.ConstituentID) AS total_artists
+FROM artwork_artists
+JOIN onview_artworks
+  ON artwork_artists.ObjectID = onview_artworks.ObjectID
+JOIN artists_raw
+  ON artwork_artists.ConstituentID = artists_raw.ConstituentID
+WHERE artists_raw.Nationality IS NOT NULL
+GROUP BY artists_raw.Nationality
+ORDER BY total_artists DESC
+LIMIT 10;
+````
