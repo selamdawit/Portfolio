@@ -149,6 +149,7 @@ This is a limited list of 10 collaborative artworks, where “Long Distance” s
 
 <br>
 <br>
+
 **Follow up : How many artworks on display are collaborations?**
 
 ````sql
