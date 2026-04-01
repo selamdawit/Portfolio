@@ -145,7 +145,7 @@ LIMIT 10;
 <img width="626" height="191" alt="Image" src="https://github.com/user-attachments/assets/421288ae-c14a-4bdd-9a99-8ef195780d55" />
 <br>
 <br>
-This is a limited list of 10 collaborative artworks, where “Long Distance” stands out with 132 artists involved.
+This is a shortlist of 10 artworks that are collaborations, where “Long Distance” stands out with 132 artists involved.
 
 <br>
 <br>
@@ -229,4 +229,25 @@ WHERE artists_raw.Nationality IS NOT NULL
 GROUP BY artists_raw.Nationality
 ORDER BY total_artists DESC
 LIMIT 10;
+````
+<img width="282" height="193" alt="Image" src="https://github.com/user-attachments/assets/1ed5e67a-934c-4f9b-b787-16635827bd57" />
+<br>
+<br>
+
+American artists are the most represented (295), followed by French (51), German (32), and British (30).
+
+<br>
+<br>
+
+### 9. Which mediums are most represented on view within each department?
+
+````sql
+SELECT
+  Department,
+  Medium,
+  COUNT(*) AS total_artworks
+FROM onview_artworks
+WHERE Medium IS NOT NULL
+GROUP BY Department, Medium
+ORDER BY Department, total_artworks DESC;
 ````
