@@ -83,3 +83,8 @@ ORDER BY total_artworks DESC;
 ````
 
 **Answer:**
+
+<img width="378" height="156" alt="Image" src="https://github.com/user-attachments/assets/3728de30-56ef-4f85-a787-577074a330fe" />
+<br>
+<br>
+It shows both count and share
