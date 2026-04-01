@@ -241,7 +241,6 @@ ALTER TABLE artworks_raw MODIFY COLUMN `Circumference (cm)` DECIMAL(8,2);
 ALTER TABLE artworks_raw MODIFY COLUMN `Seat Height (cm)` DECIMAL(8,2);
 ALTER TABLE artworks_raw MODIFY COLUMN `Duration (sec.)` DECIMAL(12,2);
 
---------------------------------------------------------------------------------------------------------------------------
 
 -- Create table to handle multiple artists per artwork
 
@@ -251,8 +250,6 @@ CREATE TABLE artwork_artists (
   ConstituentID INT
 );
 
-
---------------------------------------------------------------------------------------------------------------------------
 
 -- Split comma-separated ConstituentID values into separate rows
 
@@ -270,10 +267,64 @@ JSON_TABLE(
 ) AS j
 WHERE artworks_raw.ConstituentID IS NOT NULL;
 
---------------------------------------------------------------------------------------------------------------------------
 
 -- Prevent duplicate artwork to artist relationships
 
 
 ALTER TABLE artwork_artists
 ADD PRIMARY KEY (ObjectID, ConstituentID);
+
+
+/*
+
+Create OnView Tables to store only the artworks currently on view
+
+*/
+
+
+CREATE TABLE onview_artworks AS
+SELECT
+  ObjectID,
+  Title,
+  ConstituentID,
+  Date,
+  Medium,
+  Dimensions,
+  Classification,
+  Department,
+  DateAcquired,
+  URL,
+  ImageURL,
+  OnView
+FROM artworks_raw
+WHERE OnView IS NOT NULL;
+
+
+ALTER TABLE onview_artworks
+ADD PRIMARY KEY (ObjectID);
+
+
+-- Table that links artists to artworks currently on view
+
+
+CREATE TABLE onview_artists AS
+SELECT DISTINCT
+  artists_raw.ConstituentID,
+  artists_raw.DisplayName,
+  artists_raw.ArtistBio,
+  artists_raw.Nationality,
+  artists_raw.Gender,
+  artists_raw.BeginDate,
+  artists_raw.EndDate
+FROM artists_raw
+JOIN artwork_artists
+  ON artists_raw.ConstituentID = artwork_artists.ConstituentID
+JOIN onview_artworks
+  ON artwork_artists.ObjectID = onview_artworks.ObjectID;
+
+
+ALTER TABLE onview_artists
+ADD PRIMARY KEY (ConstituentID);
+
+
+
