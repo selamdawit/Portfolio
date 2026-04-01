@@ -44,7 +44,7 @@ LIMIT 10;
 <img width="333" height="203" alt="Image" src="https://github.com/user-attachments/assets/09485435-240d-4e54-a5ba-dcd3f07a9a72" />
 <br>
 <br>
-The artists with the most artworks on display are shown above.
+There are 55 artworks on display by Robert Frank, making him the artist with the most artworks currently exhibited.
 
 <br>
 <br>
@@ -65,7 +65,7 @@ ORDER BY total_artworks DESC;
 <img width="248" height="203" alt="Image" src="https://github.com/user-attachments/assets/4429607f-9826-4a5f-a82d-9b905a63169a" />
 <br>
 <br>
-This shows which locations currently display the most artworks.
+There are 128 pieces in the MoMA, Floor 3, 3 East gallery, which has the highest number of artworks on view.
 
 <br>
 <br>
@@ -87,4 +87,35 @@ ORDER BY total_artworks DESC;
 <img width="378" height="156" alt="Image" src="https://github.com/user-attachments/assets/3728de30-56ef-4f85-a787-577074a330fe" />
 <br>
 <br>
-It shows both count and share
+Painting and Sculpture dominates the current display with 466 artworks (39%), followed by drawings and prints with 278 artworks (23%) and photography with 230 (19%).
+
+<br>
+<br>
+
+### 5. How concentrated is the display among a small number of artists?
+
+````sql
+SELECT
+  artist_totals.total_artworks,
+  COUNT(*) AS number_of_artists
+FROM (
+
+  SELECT
+    artwork_artists.ConstituentID,
+    COUNT(DISTINCT artwork_artists.ObjectID) AS total_artworks
+  FROM artwork_artists
+  JOIN onview_artworks
+    ON artwork_artists.ObjectID = onview_artworks.ObjectID
+  GROUP BY artwork_artists.ConstituentID
+)
+
+AS artist_totals
+GROUP BY artist_totals.total_artworks
+ORDER BY artist_totals.total_artworks DESC;
+````
+
+**Answer:**
+
+<br>
+<br>
+
