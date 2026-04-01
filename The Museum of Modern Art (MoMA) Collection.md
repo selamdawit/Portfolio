@@ -145,7 +145,7 @@ LIMIT 10;
 <img width="626" height="191" alt="Image" src="https://github.com/user-attachments/assets/421288ae-c14a-4bdd-9a99-8ef195780d55" />
 <br>
 <br>
-This is a shortlist of 10 artworks that are collaborations, where “Long Distance” stands out with 132 artists involved.
+“Long Distance” has the most collaborators, with 132 artists involved.
 
 <br>
 <br>
@@ -261,7 +261,7 @@ SELECT
   Medium,
   COUNT(*) AS total_artworks
 FROM onview_artworks
-WHERE Department = 'Painting & Sculpture'
+WHERE Department = 'Photography'
   AND Medium IS NOT NULL
 GROUP BY Medium
 ORDER BY total_artworks DESC
@@ -270,7 +270,7 @@ LIMIT 10;
 
 **Answer:**
 
-Across all artworks on display, oil on canvas is the most common medium with 184 artworks, followed by gelatin silver prints.
+Across all artworks on display, oil on canvas is the most common medium with 184 artworks.
 <br>
 <br>
-Within the Painting & Sculpture department, oil on canvas remains dominant, with the slight difference indicating that at least one oil on canvas painting is classified under a different department. This shows how mediums are not always exclusive to a single department.
+Querying the Photography department only, gelatin silver print is the dominant medium with 145 artworks, which shows that while oil on canvas leads overall, photography on display is largely centred around traditional photographic printing methods.
