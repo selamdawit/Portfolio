@@ -165,6 +165,35 @@ FROM (
 ) AS collaborations;
 ````
 
+**Answer:**
 
+<img width="166" height="83" alt="Image" src="https://github.com/user-attachments/assets/42731a9d-0a13-4d37-9c30-0b7c447dd220" />
+<br>
+<br>
+There are 54 collaborative artworks in total, which is about 4% of the 1,210 artworks on display.
 
+<br>
+<br>
 
+### 7. What is the gender representation of artists currently on view?
+
+````sql
+SELECT COUNT(DISTINCT artwork_artists.ConstituentID) AS total_artists
+FROM artwork_artists
+JOIN onview_artworks
+  ON artwork_artists.ObjectID = onview_artworks.ObjectID;
+````
+
+````sql
+SELECT
+  artists_raw.Gender,
+  COUNT(DISTINCT artists_raw.ConstituentID) AS total_artists
+FROM artwork_artists
+JOIN onview_artworks
+  ON artwork_artists.ObjectID = onview_artworks.ObjectID
+JOIN artists_raw
+  ON artwork_artists.ConstituentID = artists_raw.ConstituentID
+GROUP BY artists_raw.Gender;
+````
+
+**Answer:**
