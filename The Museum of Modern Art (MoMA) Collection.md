@@ -230,6 +230,7 @@ GROUP BY artists_raw.Nationality
 ORDER BY total_artists DESC
 LIMIT 10;
 ````
+
 <img width="282" height="193" alt="Image" src="https://github.com/user-attachments/assets/1ed5e67a-934c-4f9b-b787-16635827bd57" />
 <br>
 <br>
@@ -243,11 +244,29 @@ American artists are the most represented (295), followed by French (51), German
 
 ````sql
 SELECT
-  Department,
   Medium,
   COUNT(*) AS total_artworks
 FROM onview_artworks
 WHERE Medium IS NOT NULL
-GROUP BY Department, Medium
-ORDER BY Department, total_artworks DESC;
+GROUP BY Medium
+ORDER BY total_artworks DESC
+LIMIT 10;
 ````
+
+**What are the most common mediums in Photography department?**
+
+````sql
+SELECT
+  Medium,
+  COUNT(*) AS total_artworks
+FROM onview_artworks
+WHERE Department = 'Photography'
+  AND Medium IS NOT NULL
+GROUP BY Medium
+ORDER BY total_artworks DESC
+LIMIT 5;
+````
+
+<img width="420" height="195" alt="Image" src="https://github.com/user-attachments/assets/4e44f5d4-aadf-4ea8-9c16-65ca28d55b38" />
+<br>
+<br>
