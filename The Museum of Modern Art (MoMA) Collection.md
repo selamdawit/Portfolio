@@ -253,20 +253,19 @@ ORDER BY total_artworks DESC
 LIMIT 10;
 ````
 
-**What are the most common mediums in Photography department?**
+**What are the most common mediums in Painting & Sculpture department?**
 
 ````sql
 SELECT
   Medium,
   COUNT(*) AS total_artworks
 FROM onview_artworks
-WHERE Department = 'Photography'
+WHERE Department = 'Painting & Sculpture'
   AND Medium IS NOT NULL
 GROUP BY Medium
 ORDER BY total_artworks DESC
-LIMIT 5;
+LIMIT 10;
 ````
 
-<img width="420" height="195" alt="Image" src="https://github.com/user-attachments/assets/4e44f5d4-aadf-4ea8-9c16-65ca28d55b38" />
 <br>
 <br>
