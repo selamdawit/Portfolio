@@ -197,3 +197,7 @@ GROUP BY artists_raw.Gender;
 ````
 
 **Answer:**
+
+<img width="153" height="85" alt="Image" src="https://github.com/user-attachments/assets/c5467b40-5f5a-42c8-9851-b3d524071b4d" />
+
+
