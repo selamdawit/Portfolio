@@ -200,4 +200,14 @@ GROUP BY artists_raw.Gender;
 
 <img width="153" height="85" alt="Image" src="https://github.com/user-attachments/assets/c5467b40-5f5a-42c8-9851-b3d524071b4d" />
 
+<img width="238" height="110" alt="Image" src="https://github.com/user-attachments/assets/2778d630-783c-4d93-a356-1aef37c591f8" />
+<br>
+<br>
+
+There are 665 artists with artworks currently on display.
+
+* 432 (65%) are male
+* 191 (29%) are female
+* 1 (0.2%) is recorded as a transgender woman
+* 41 (6%) have no gender recorded
 
