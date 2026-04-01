@@ -254,11 +254,7 @@ ORDER BY total_artworks DESC
 LIMIT 10;
 ````
 
-**Answer:**
-
-
-
-**What are the most common mediums in Painting & Sculpture department?**
+**Follow up: What are the most common mediums in Painting & Sculpture department?**
 
 ````sql
 SELECT
@@ -274,7 +270,7 @@ LIMIT 10;
 
 **Answer:**
 
-<img width="389" height="217" alt="Image" src="https://github.com/user-attachments/assets/3663ba43-09ed-49f4-8b8d-5cabb238934b" />
-
+Across all artworks on display, oil on canvas is the most common medium with 184 artworks, followed by gelatin silver prints.
 <br>
 <br>
+Within the Painting & Sculpture department, oil on canvas remains dominant, with the slight difference indicating that at least one oil on canvas painting is classified under a different department. This shows how mediums are not always exclusive to a single department.
