@@ -212,7 +212,6 @@ There are 665 artists with artworks currently on display.
 * 41 (6%) have no gender recorded
   
 <br>
-<br>
 
 ### 8. Which nationalities are most represented among artists on view?
 
@@ -238,7 +237,7 @@ LIMIT 10;
 American artists are the most represented (295), followed by French (51), German (32), and British (30).
 
 <br>
-<br>
+
 
 ### 9. Which mediums are most represented on view within each department?
 
