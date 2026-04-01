@@ -142,4 +142,28 @@ LIMIT 10;
 
 **Answer:**
 
+<img width="626" height="191" alt="Image" src="https://github.com/user-attachments/assets/421288ae-c14a-4bdd-9a99-8ef195780d55" />
+<br>
+<br>
+This is a limited list of 10 collaborative artworks, where “Long Distance” stands out with 132 artists involved.
+
+<br>
+<br>
+**Follow up : How many artworks on display are collaborations?**
+
+````sql
+SELECT COUNT(*) AS total_collab_artworks
+FROM (
+  SELECT
+    onview_artworks.ObjectID
+  FROM artwork_artists
+  JOIN onview_artworks
+    ON artwork_artists.ObjectID = onview_artworks.ObjectID
+  GROUP BY onview_artworks.ObjectID
+  HAVING COUNT(*) > 1
+) AS collaborations;
+````
+
+
+
 
