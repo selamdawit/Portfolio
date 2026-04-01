@@ -61,3 +61,25 @@ ORDER BY total_artworks DESC;
 ````
 
 **Answer:**
+
+<img width="248" height="203" alt="Image" src="https://github.com/user-attachments/assets/4429607f-9826-4a5f-a82d-9b905a63169a" />
+<br>
+<br>
+This shows which locations currently display the most artworks.
+
+<br>
+<br>
+
+### 4. Which departments dominate the current display?
+
+````sql
+SELECT
+  Department,
+  COUNT(*) AS total_artworks,
+  CONCAT(ROUND(COUNT(*) * 100 / (SELECT COUNT(*) FROM onview_artworks)), '%') AS percentage
+FROM onview_artworks
+GROUP BY Department
+ORDER BY total_artworks DESC;
+````
+
+**Answer:**
