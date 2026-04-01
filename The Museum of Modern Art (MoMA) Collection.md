@@ -116,6 +116,30 @@ ORDER BY artist_totals.total_artworks DESC;
 
 **Answer:**
 
+<img width="331" height="351" alt="Image" src="https://github.com/user-attachments/assets/693e2c3f-a219-41bb-a0de-63d4e0a4564f" />
 <br>
 <br>
+Most artists have only one artwork on display (474 artists). The collection is widely distributed across many artists, rather than being dominated by a small number of artists.
+
+<br>
+<br>
+
+### 6. Which artworks are collaborations?
+
+````sql
+SELECT
+  onview_artworks.ObjectID,
+  onview_artworks.Title,
+  COUNT(*) AS artist_count
+FROM artwork_artists
+JOIN onview_artworks
+  ON artwork_artists.ObjectID = onview_artworks.ObjectID
+GROUP BY onview_artworks.ObjectID, onview_artworks.Title
+HAVING COUNT(*) > 1
+ORDER BY artist_count DESC, onview_artworks.Title
+LIMIT 10;
+````
+
+**Answer:**
+
 
