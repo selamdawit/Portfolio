@@ -1,3 +1,13 @@
-# The Museum of Modern Art (MoMA) Collection 🎨
+# MoMA Collection Analysis 🎨
 
-This Repository will hold all of the code and queries from the Portfolio Projects.
+## 📌 Solution
+
+### 1. How many artworks are currently on display?
+
+````sql
+SELECT COUNT(*) AS total_onview_artworks
+FROM onview_artworks;
+````
+**Answer:**
+
+
