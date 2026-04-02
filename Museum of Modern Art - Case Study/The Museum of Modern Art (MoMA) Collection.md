@@ -274,3 +274,9 @@ Across all artworks on display, oil on canvas is the most common medium with 184
 <br>
 <br>
 Querying the Photography department only, gelatin silver print is the dominant medium with 145 artworks, which shows that while oil on canvas leads overall, photography on display is largely centred around traditional photographic printing methods.
+
+<br>
+
+### 10. How modern are the artworks at the Museum?
+
+
