@@ -15,6 +15,8 @@ CREATE TABLE encounters_raw (
     `REASONDESCRIPTION` TEXT
 );
 
+
+
 LOAD DATA LOCAL INFILE '/Users/selam/Downloads/Hospital+Patient+Records/encounters.csv'
 INTO TABLE encounters_raw
 CHARACTER SET utf8mb4
@@ -23,8 +25,54 @@ OPTIONALLY ENCLOSED BY '"'
 LINES TERMINATED BY '\n'
 IGNORE 1 LINES;
 
-SELECT 
-    START,
-    STR_TO_DATE(REPLACE(REPLACE(START, 'T', ' '), 'Z', ''), '%Y-%m-%d %H:%i:%s') AS Start_Converted
-FROM encounters_raw;
+
+
+ALTER TABLE encounters_raw
+ADD COLUMN Start_Converted DATETIME;
+
+
+
+UPDATE encounters_raw
+SET Start_Converted = STR_TO_DATE(REPLACE(REPLACE(START, 'T', ' '), 'Z', ''), '%Y-%m-%d %H:%i:%s');
+
+
+
+ALTER TABLE encounters_raw
+ADD Stop_Converted DATETIME;
+
+
+
+UPDATE encounters_raw
+SET Stop_Converted = STR_TO_DATE(REPLACE(REPLACE(STOP, 'T', ' '), 'Z', ''), '%Y-%m-%d %H:%i:%s');
+
+
+
+SELECT * 
+FROM encounters_raw
+WHERE Start_Converted IS NULL
+   OR Stop_Converted IS NULL;
+
+
+/* no rows failed the conversion, drop the original text columns and keep the cleaned datetime columns */
+
+
+ALTER TABLE encounters_raw
+DROP COLUMN START,
+DROP COLUMN STOP;
+
+
+/* rename the cleaned columns: */
+
+
+ALTER TABLE encounters_raw
+CHANGE Start_Converted START DATETIME;
+
+
+/* remove extra spaces in description column */
+
+
+UPDATE encounters_raw
+SET DESCRIPTION = LTRIM(RTRIM(DESCRIPTION));
+
+
 
