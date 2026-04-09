@@ -1,20 +1,26 @@
-CREATE TABLE encounters_raw (
-    `Id` VARCHAR(36),
-    `START` VARCHAR(30),
-    `STOP` VARCHAR(30),
-    `PATIENT` VARCHAR(36),
-    `ORGANIZATION` VARCHAR(36),
-    `PAYER` VARCHAR(36),
-    `ENCOUNTERCLASS` VARCHAR(50),
-    `CODE` VARCHAR(30),
-    `DESCRIPTION` TEXT,
-    `BASE_ENCOUNTER_COST` VARCHAR(30),
-    `TOTAL_CLAIM_COST` VARCHAR(30),
-    `PAYER_COVERAGE` VARCHAR(30),
-    `REASONCODE` VARCHAR(30),
-    `REASONDESCRIPTION` TEXT
-);
+/*
 
+Data Cleaning : Encounters
+
+*/
+
+
+CREATE TABLE encounters_raw (
+    Id VARCHAR(36),
+    START VARCHAR(30),
+    STOP VARCHAR(30),
+    PATIENT VARCHAR(36),
+    ORGANIZATION VARCHAR(36),
+    PAYER VARCHAR(36),
+    ENCOUNTERCLASS VARCHAR(50),
+    CODE VARCHAR(30),
+    DESCRIPTION TEXT,
+    BASE_ENCOUNTER_COST VARCHAR(30),
+    TOTAL_CLAIM_COST VARCHAR(30),
+    PAYER_COVERAGE VARCHAR(30),
+    REASONCODE VARCHAR(30),
+    REASONDESCRIPTION TEXT
+);
 
 
 LOAD DATA LOCAL INFILE '/Users/selam/Downloads/Hospital+Patient+Records/encounters.csv'
@@ -27,52 +33,80 @@ IGNORE 1 LINES;
 
 
 
-ALTER TABLE encounters_raw
-ADD COLUMN Start_Converted DATETIME;
-
-
-
-UPDATE encounters_raw
-SET Start_Converted = STR_TO_DATE(REPLACE(REPLACE(START, 'T', ' '), 'Z', ''), '%Y-%m-%d %H:%i:%s');
-
+-- Convert START and STOP from text to datetime
 
 
 ALTER TABLE encounters_raw
-ADD Stop_Converted DATETIME;
-
+ADD COLUMN start_converted DATETIME,
+ADD COLUMN stop_converted DATETIME;
 
 
 UPDATE encounters_raw
-SET Stop_Converted = STR_TO_DATE(REPLACE(REPLACE(STOP, 'T', ' '), 'Z', ''), '%Y-%m-%d %H:%i:%s');
+SET start_converted = STR_TO_DATE(REPLACE(REPLACE(START, 'T', ' '), 'Z', ''), '%Y-%m-%d %H:%i:%s'),
+    stop_converted = STR_TO_DATE(REPLACE(REPLACE(STOP, 'T', ' '), 'Z', ''), '%Y-%m-%d %H:%i:%s');
 
 
 
-SELECT * 
+-- Check whether date conversion failed
+
+
+SELECT *
 FROM encounters_raw
-WHERE Start_Converted IS NULL
-   OR Stop_Converted IS NULL;
+WHERE start_converted IS NULL
+   OR stop_converted IS NULL;
 
 
-/* no rows failed the conversion, drop the original text columns and keep the cleaned datetime columns */
+
+-- Drop original text date columns
 
 
 ALTER TABLE encounters_raw
 DROP COLUMN START,
 DROP COLUMN STOP;
 
-
-/* rename the cleaned columns: */
-
-
+-- Rename cleaned datetime columns
 ALTER TABLE encounters_raw
-CHANGE Start_Converted START DATETIME;
+CHANGE start_converted START DATETIME,
+CHANGE stop_converted STOP DATETIME;
 
-
-/* remove extra spaces in description column */
-
+-- Trim text columns
+UPDATE encounters_raw
+SET DESCRIPTION = LTRIM(RTRIM(DESCRIPTION))
+WHERE DESCRIPTION IS NOT NULL;
 
 UPDATE encounters_raw
-SET DESCRIPTION = LTRIM(RTRIM(DESCRIPTION));
+SET ENCOUNTERCLASS = LOWER(LTRIM(RTRIM(ENCOUNTERCLASS)))
+WHERE ENCOUNTERCLASS IS NOT NULL;
 
+UPDATE encounters_raw
+SET REASONDESCRIPTION = LTRIM(RTRIM(REASONDESCRIPTION))
+WHERE REASONDESCRIPTION IS NOT NULL;
 
+-- Convert cost columns from text to numeric
+ALTER TABLE encounters_raw
+MODIFY BASE_ENCOUNTER_COST DECIMAL(18,2),
+MODIFY TOTAL_CLAIM_COST DECIMAL(18,2),
+MODIFY PAYER_COVERAGE DECIMAL(18,2);
 
+-- Create derived cost column
+ALTER TABLE encounters_raw
+ADD COLUMN out_of_pocket_cost DECIMAL(18,2);
+
+UPDATE encounters_raw
+SET out_of_pocket_cost = TOTAL_CLAIM_COST - PAYER_COVERAGE
+WHERE TOTAL_CLAIM_COST IS NOT NULL
+  AND PAYER_COVERAGE IS NOT NULL;
+
+-- Check for duplicate encounter IDs
+SELECT Id, COUNT(*) AS duplicate_count
+FROM encounters_raw
+GROUP BY Id
+HAVING COUNT(*) > 1;
+
+-- Check for negative values in cost columns
+SELECT *
+FROM encounters_raw
+WHERE BASE_ENCOUNTER_COST < 0
+   OR TOTAL_CLAIM_COST < 0
+   OR PAYER_COVERAGE < 0
+   OR out_of_pocket_cost < 0;
