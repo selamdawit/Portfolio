@@ -32,7 +32,6 @@ LINES TERMINATED BY '\n'
 IGNORE 1 LINES;
 
 
-
 -- Convert START and STOP from text to datetime
 
 
@@ -46,7 +45,6 @@ SET start_converted = STR_TO_DATE(REPLACE(REPLACE(START, 'T', ' '), 'Z', ''), '%
     stop_converted = STR_TO_DATE(REPLACE(REPLACE(STOP, 'T', ' '), 'Z', ''), '%Y-%m-%d %H:%i:%s');
 
 
-
 -- Check whether date conversion failed
 
 
@@ -56,7 +54,6 @@ WHERE start_converted IS NULL
    OR stop_converted IS NULL;
 
 
-
 -- Drop original text date columns
 
 
@@ -64,12 +61,18 @@ ALTER TABLE encounters_raw
 DROP COLUMN START,
 DROP COLUMN STOP;
 
+
 -- Rename cleaned datetime columns
+
+
 ALTER TABLE encounters_raw
 CHANGE start_converted START DATETIME,
 CHANGE stop_converted STOP DATETIME;
 
+
 -- Trim text columns
+
+
 UPDATE encounters_raw
 SET DESCRIPTION = LTRIM(RTRIM(DESCRIPTION))
 WHERE DESCRIPTION IS NOT NULL;
