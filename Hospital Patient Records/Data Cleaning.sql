@@ -22,7 +22,6 @@ CREATE TABLE encounters_raw (
     REASONDESCRIPTION TEXT
 );
 
-
 LOAD DATA LOCAL INFILE '/Users/selam/Downloads/Hospital+Patient+Records/encounters.csv'
 INTO TABLE encounters_raw
 CHARACTER SET utf8mb4
@@ -32,21 +31,18 @@ LINES TERMINATED BY '\n'
 IGNORE 1 LINES;
 
 
--- Convert START and STOP from text to datetime
-
+-- convert START and STOP from text to datetime
 
 ALTER TABLE encounters_raw
 ADD COLUMN start_converted DATETIME,
 ADD COLUMN stop_converted DATETIME;
-
 
 UPDATE encounters_raw
 SET start_converted = STR_TO_DATE(REPLACE(REPLACE(START, 'T', ' '), 'Z', ''), '%Y-%m-%d %H:%i:%s'),
     stop_converted = STR_TO_DATE(REPLACE(REPLACE(STOP, 'T', ' '), 'Z', ''), '%Y-%m-%d %H:%i:%s');
 
 
--- Check whether date conversion failed
-
+-- check date conversion
 
 SELECT *
 FROM encounters_raw
@@ -54,24 +50,21 @@ WHERE start_converted IS NULL
    OR stop_converted IS NULL;
 
 
--- Drop original text date columns
-
+-- drop original text date columns
 
 ALTER TABLE encounters_raw
 DROP COLUMN START,
 DROP COLUMN STOP;
 
 
--- Rename cleaned datetime columns
-
+-- rename cleaned datetime columns
 
 ALTER TABLE encounters_raw
 CHANGE start_converted START DATETIME,
 CHANGE stop_converted STOP DATETIME;
 
 
--- Trim text columns
-
+-- trim text columns
 
 UPDATE encounters_raw
 SET DESCRIPTION = LTRIM(RTRIM(DESCRIPTION))
@@ -85,28 +78,34 @@ UPDATE encounters_raw
 SET REASONDESCRIPTION = LTRIM(RTRIM(REASONDESCRIPTION))
 WHERE REASONDESCRIPTION IS NOT NULL;
 
--- Convert cost columns from text to numeric
+
+-- convert cost columns from text to numeric
+
 ALTER TABLE encounters_raw
 MODIFY BASE_ENCOUNTER_COST DECIMAL(18,2),
 MODIFY TOTAL_CLAIM_COST DECIMAL(18,2),
 MODIFY PAYER_COVERAGE DECIMAL(18,2);
 
--- Create derived cost column
+
+-- create patient responsibility cost column after payer coverag
+
 ALTER TABLE encounters_raw
 ADD COLUMN out_of_pocket_cost DECIMAL(18,2);
 
 UPDATE encounters_raw
-SET out_of_pocket_cost = TOTAL_CLAIM_COST - PAYER_COVERAGE
-WHERE TOTAL_CLAIM_COST IS NOT NULL
-  AND PAYER_COVERAGE IS NOT NULL;
+SET out_of_pocket_cost = TOTAL_CLAIM_COST - PAYER_COVERAGE;
 
--- Check for duplicate encounter IDs
+
+-- check for duplicate encounter ids
+
 SELECT Id, COUNT(*) AS duplicate_count
 FROM encounters_raw
 GROUP BY Id
 HAVING COUNT(*) > 1;
 
+
 -- Check for negative values in cost columns
+
 SELECT *
 FROM encounters_raw
 WHERE BASE_ENCOUNTER_COST < 0
