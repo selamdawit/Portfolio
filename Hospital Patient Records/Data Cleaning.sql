@@ -1,34 +1,14 @@
 /*
 
-Data Cleaning : Encounters
+Data Cleaning 
+
+This script cleans two imported raw tables:
+- encounters_raw
+- patients_raw
+
+The raw CSV files were imported before running this.
 
 */
-
-
-CREATE TABLE encounters_raw (
-    Id VARCHAR(36),
-    START VARCHAR(30),
-    STOP VARCHAR(30),
-    PATIENT VARCHAR(36),
-    ORGANIZATION VARCHAR(36),
-    PAYER VARCHAR(36),
-    ENCOUNTERCLASS VARCHAR(50),
-    CODE VARCHAR(30),
-    DESCRIPTION TEXT,
-    BASE_ENCOUNTER_COST VARCHAR(30),
-    TOTAL_CLAIM_COST VARCHAR(30),
-    PAYER_COVERAGE VARCHAR(30),
-    REASONCODE VARCHAR(30),
-    REASONDESCRIPTION TEXT
-);
-
-LOAD DATA LOCAL INFILE '/Users/selam/Downloads/Hospital+Patient+Records/encounters.csv'
-INTO TABLE encounters_raw
-CHARACTER SET utf8mb4
-FIELDS TERMINATED BY ','
-OPTIONALLY ENCLOSED BY '"'
-LINES TERMINATED BY '\n'
-IGNORE 1 LINES;
 
 
 -- convert START and STOP from text to datetime
@@ -87,7 +67,7 @@ MODIFY TOTAL_CLAIM_COST DECIMAL(18,2),
 MODIFY PAYER_COVERAGE DECIMAL(18,2);
 
 
--- create patient responsibility cost column after payer coverag
+-- create out-of-pocket cost column
 
 ALTER TABLE encounters_raw
 ADD COLUMN out_of_pocket_cost DECIMAL(18,2);
@@ -112,3 +92,117 @@ WHERE BASE_ENCOUNTER_COST < 0
    OR TOTAL_CLAIM_COST < 0
    OR PAYER_COVERAGE < 0
    OR out_of_pocket_cost < 0;
+
+
+
+/* Imported patients table */
+
+-- convert birthdate and deathdate from txt to date format
+
+ALTER TABLE patients_raw
+ADD COLUMN birthdate_converted DATE,
+ADD COLUMN deathdate_converted DATE;
+
+UPDATE patients_raw
+SET birthdate_converted = STR_TO_DATE(NULLIF(TRIM(BIRTHDATE), ''), '%Y-%m-%d'),
+    deathdate_converted = STR_TO_DATE(NULLIF(TRIM(DEATHDATE), ''), '%Y-%m-%d');
+
+
+-- check date conversion
+
+SELECT BIRTHDATE, birthdate_converted, DEATHDATE, deathdate_converted
+FROM patients_raw
+LIMIT 20;
+
+
+-- drop original text columns
+
+ALTER TABLE patients_raw
+DROP COLUMN BIRTHDATE,
+DROP COLUMN DEATHDATE;
+
+ALTER TABLE patients_raw
+CHANGE birthdate_converted BIRTHDATE DATE,
+CHANGE deathdate_converted DEATHDATE DATE;
+
+
+-- check if columns stored as txt need to be trimmed
+
+SELECT DISTINCT PREFIX
+FROM patients_raw;
+
+
+-- check gender values and see if values need to be trimmed
+    
+SELECT DISTINCT GENDER  
+FROM patients_raw;
+
+
+-- check marital values
+
+SELECT DISTINCT MARITAL
+FROM patients_raw;
+
+
+-- expand marital value 
+
+UPDATE patients_raw
+SET MARITAL = 'Married'
+WHERE MARITAL = 'M';
+
+UPDATE patients_raw
+SET MARITAL = 'Single'
+WHERE MARITAL = 'S';
+
+
+-- standardise, capitalise first letter for consistency
+
+UPDATE patients_raw SET RACE = 'White' WHERE RACE = 'white';
+UPDATE patients_raw SET RACE = 'Black' WHERE RACE = 'black';
+UPDATE patients_raw SET RACE = 'Asian' WHERE RACE = 'asian';
+UPDATE patients_raw SET RACE = 'Native' WHERE RACE = 'native';
+UPDATE patients_raw SET RACE = 'Hawaiian' WHERE RACE = 'hawaiian';
+UPDATE patients_raw SET RACE = 'Other' WHERE RACE = 'other';
+
+UPDATE patients_raw SET ETHNICITY = 'Hispanic' WHERE ETHNICITY = 'hispanic';
+UPDATE patients_raw SET ETHNICITY = 'Nonhispanic' WHERE ETHNICITY = 'nonhispanic';
+
+
+-- check ZIP formatting, since the zip code starts 0 it needs to be stored at txt
+
+SELECT ZIP
+FROM patients_raw
+LIMIT 20;
+
+
+-- convert empty ZIP values to NULL
+
+UPDATE patients_raw
+SET ZIP = NULL
+WHERE TRIM(ZIP) = '';
+
+
+-- convert latitude and longitude to numeric datatype 
+
+ALTER TABLE patients_raw
+MODIFY LAT DECIMAL(12,8),
+MODIFY LON DECIMAL(12,8);
+
+
+-- check for duplicate patient id
+
+SELECT Id, COUNT(*)
+FROM patients_raw
+GROUP BY Id
+HAVING COUNT(*) > 1;
+
+
+-- check for null values
+
+SELECT *
+FROM patients_raw
+WHERE Id IS NULL
+   OR BIRTHDATE IS NULL
+   OR ZIP IS NULL
+   OR LAT IS NULL
+   OR LON IS NULL;
