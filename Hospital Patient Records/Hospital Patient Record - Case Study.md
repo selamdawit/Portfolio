@@ -99,7 +99,26 @@ GROUP BY GENDER;
 
 **Answer:**
 
-<img width="264" height="154" alt="Image" src="https://github.com/user-attachments/assets/2bbc64b1-629b-4925-a154-65dc24728098" />
+<img width="372" height="91" alt="Image" src="https://github.com/user-attachments/assets/0ba473dd-1422-4bdb-a24b-9f6f1cd6a70b" />
+
+<br>
+<br>
+N/A
+<br>
+<br>
+
+
+### 6. Are there missing critical patient records?
+
+````sql
+SELECT COUNT(*) AS missing_ID
+FROM patients_raw
+WHERE Id IS NULL OR BIRTHDATE IS NULL;
+````
+
+**Answer:**
+
+<img width="372" height="91" alt="Image" src="https://github.com/user-attachments/assets/0ba473dd-1422-4bdb-a24b-9f6f1cd6a70b" />
 
 <br>
 <br>
