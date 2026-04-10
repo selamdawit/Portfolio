@@ -77,7 +77,7 @@ ORDER BY total DESC;
 
 **Answer:**
 
-
+<img width="264" height="154" alt="Image" src="https://github.com/user-attachments/assets/2bbc64b1-629b-4925-a154-65dc24728098" />
 
 <br>
 <br>
@@ -86,3 +86,23 @@ N/A
 <br>
 
 
+### 5. What is the gender balance of patients?
+
+````sql
+SELECT 
+  GENDER,
+  COUNT(*) AS total,
+  ROUND(COUNT(*) * 100 / (SELECT COUNT(*) FROM patients_raw), 2) AS percentage
+FROM patients_raw
+GROUP BY GENDER;
+````
+
+**Answer:**
+
+<img width="264" height="154" alt="Image" src="https://github.com/user-attachments/assets/2bbc64b1-629b-4925-a154-65dc24728098" />
+
+<br>
+<br>
+N/A
+<br>
+<br>
