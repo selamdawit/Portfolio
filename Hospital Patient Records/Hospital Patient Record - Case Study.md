@@ -37,7 +37,7 @@ The average patient age in this dataset is 74 years old.
 <br>
 <br>
 
-### 3.What is the age structure of the patient population?
+### 3. What is the age structure of the patient population?
 
 ````sql
 SELECT 
@@ -53,4 +53,36 @@ GROUP BY age_group;
 ````
 
 **Answer:**
+
+<img width="225" height="107" alt="Image" src="https://github.com/user-attachments/assets/74935124-31ed-418d-a076-8d9de3f0a258" />
+
+<br>
+<br>
+N/A
+<br>
+<br>
+
+
+### 4. How diverse is the patient population by race?
+
+````sql
+SELECT 
+  RACE,
+  COUNT(*) AS total,
+  ROUND(COUNT(*) * 100 / (SELECT COUNT(*) FROM patients_raw), 2) AS percentage
+FROM patients_raw
+GROUP BY RACE
+ORDER BY total DESC;
+````
+
+**Answer:**
+
+
+
+<br>
+<br>
+N/A
+<br>
+<br>
+
 
