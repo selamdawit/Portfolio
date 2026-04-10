@@ -18,3 +18,11 @@ FROM patients_raw;
 <br>
 There are 974 patients in the dataset.
 
+### 2. What is the average age of patients?
+
+````sql
+SELECT ROUND(AVG(YEAR(CURDATE()) - YEAR(BIRTHDATE))) AS average_patient_age
+FROM patients_raw;
+````
+
+**Answer:**
