@@ -10,5 +10,8 @@ SELECT
 FROM patients_raw;
 ````
 
+**Answer:**
+
+
 
 
