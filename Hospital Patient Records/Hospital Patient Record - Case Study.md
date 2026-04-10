@@ -118,7 +118,7 @@ WHERE Id IS NULL OR BIRTHDATE IS NULL;
 
 **Answer:**
 
-<img width="372" height="91" alt="Image" src="https://github.com/user-attachments/assets/0ba473dd-1422-4bdb-a24b-9f6f1cd6a70b" />
+<img width="160" height="74" alt="Image" src="https://github.com/user-attachments/assets/d6a93967-9af6-4508-b22d-4fe681b6d23b" />
 
 <br>
 <br>
