@@ -1,6 +1,9 @@
 # Hospital Patient Record Analysis 🏥
 
-## 📌 Solution
+## Objective
+To analyze hospital patient and encounter data to understand patient demographics, healthcare usage, costs, and geographic distribution.
+<br>
+## Solution 📌 
 
 ### 1. How many patients are in the dataset?
 
@@ -16,7 +19,7 @@ FROM patients_raw;
 
 <br>
 <br>
-There are 974 patients in the dataset.
+There are 974 unique patients in the dataset.
 <br>
 <br>
 
@@ -58,7 +61,7 @@ GROUP BY age_group;
 
 <br>
 <br>
-N/A
+The majority of patients are aged 65+, with 629 individuals in this group.
 <br>
 <br>
 
@@ -81,7 +84,7 @@ ORDER BY total DESC;
 
 <br>
 <br>
-N/A
+White patients dominate the dataset at 69.82%, while all other racial groups each represent less than 20%.
 <br>
 <br>
 
@@ -103,7 +106,7 @@ GROUP BY GENDER;
 
 <br>
 <br>
-N/A
+The dataset is evenly split by gender, with a slight majority of male patients.
 <br>
 <br>
 
@@ -122,7 +125,7 @@ WHERE Id IS NULL OR BIRTHDATE IS NULL;
 
 <br>
 <br>
-N/A
+There are no missing patient IDs in the dataset.
 <br>
 <br>
 
@@ -146,7 +149,7 @@ FROM (
 
 <br>
 <br>
-N/A
+On average, each patient has 28.6 healthcare encounters, indicating frequent service usage.
 <br>
 <br>
 
@@ -169,7 +172,7 @@ LIMIT 10;
 
 <br>
 <br>
-N/A
+While the average is 28.6 encounters per patient, some patients have over 1,300 encounters, indicating highly uneven usage.
 <br>
 <br>
 
@@ -192,7 +195,7 @@ ORDER BY total DESC;
 
 <br>
 <br>
-N/A
+Ambulatory and outpatient encounters together make up over 67% of all healthcare visits.
 <br>
 <br>
 
@@ -211,7 +214,7 @@ FROM encounters_raw;
 
 <br>
 <br>
-N/A
+The average total claim cost per encounter is 3,639.68.
 <br>
 <br>
 
@@ -230,7 +233,7 @@ FROM encounters_raw;
 
 <br>
 <br>
-N/A
+The average out of pocket cost per encounter, meaning the amount patients pay themselves is 2,524.72.
 <br>
 <br>
 
@@ -249,7 +252,7 @@ WHERE TOTAL_CLAIM_COST > 0;
 
 <br>
 <br>
-N/A
+On average, payers cover 32.19% of the total claim cost per encounter.
 <br>
 <br>
 
@@ -278,7 +281,7 @@ ORDER BY total_encounters DESC;
 
 <br>
 <br>
-Patients aged 40+ have the highest number of encounters, indicating that older patients use healthcare services more frequently.
+Patients aged 40 and over account for nearly all encounters at 26,690, showing that healthcare usage is heavily concentrated among older patients.
 <br>
 <br>
 
@@ -299,7 +302,7 @@ ORDER BY avg_cost DESC;
 
 <br>
 <br>
-N/A
+Inpatient encounters have the highest average cost at 7,761.35, while outpatient encounters are the lowest at 2,237.30, showing that more intensive types of care drive significantly higher costs.
 <br>
 <br>
 
@@ -321,7 +324,8 @@ LIMIT 10;
 
 <br>
 <br>
-N/A
+Location data is incomplete in the 'patients' dataset, with 142 patients missing ZIP codes, while the highest recorded ZIP 02151 (Revere, Massachusetts) has 41 patients, limiting accurate geographic analysis.
+
 <br>
 <br>
 
@@ -347,6 +351,6 @@ LIMIT 10;
 
 <br>
 <br>
-N/A
+Missing ZIP codes account for the highest number of encounters at 3,709, while ZIP 02045 (Hull, Massachusetts) has the highest recorded count at 1,519, highlighting a significant gap in the 'encounters' dataset.
 <br>
 <br>
