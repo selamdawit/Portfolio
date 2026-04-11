@@ -226,7 +226,7 @@ FROM encounters_raw;
 
 **Answer:**
 
-<img width="159" height="80" alt="Image" src="https://github.com/user-attachments/assets/778bd3fe-cb34-4376-9303-23426126068e" />
+<img width="223" height="79" alt="Image" src="https://github.com/user-attachments/assets/3ddcf147-c7e3-46d6-9c94-f1ac61dbb66d" />
 
 <br>
 <br>
