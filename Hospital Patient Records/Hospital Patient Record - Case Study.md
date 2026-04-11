@@ -245,6 +245,13 @@ WHERE TOTAL_CLAIM_COST > 0;
 
 **Answer:**
 
+<img width="187" height="66" alt="Image" src="https://github.com/user-attachments/assets/4ede992f-1daa-43dd-9611-34237ddb1265" />
+
+<br>
+<br>
+N/A
+<br>
+<br>
 
 ### 12. Does healthcare usage vary by age group?
 
