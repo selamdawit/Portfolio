@@ -340,3 +340,13 @@ GROUP BY patients_raw.ZIP
 ORDER BY total_encounters DESC  
 LIMIT 10;
 ````
+
+**Answer:**
+
+<img width="215" height="199" alt="Image" src="https://github.com/user-attachments/assets/409b2fe3-0c22-46dd-b8f3-c36f6a3539d0" />
+
+<br>
+<br>
+N/A
+<br>
+<br>
