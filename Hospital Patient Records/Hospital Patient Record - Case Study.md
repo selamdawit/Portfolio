@@ -317,4 +317,26 @@ LIMIT 10;
 
 **Answer:**
 
+<img width="203" height="201" alt="Image" src="https://github.com/user-attachments/assets/bc49c730-8e7a-4af1-89a9-8555a23d9cad" />
+
+<br>
+<br>
+N/A
+<br>
+<br>
+
 ### 15. Which areas have the most encounters?
+
+````sql
+SELECT  
+  patients_raw.ZIP,  
+  COUNT(encounters_raw.Id) AS total_encounters  
+
+FROM patients_raw  
+JOIN encounters_raw  
+  ON patients_raw.Id = encounters_raw.PATIENT  
+
+GROUP BY patients_raw.ZIP  
+ORDER BY total_encounters DESC  
+LIMIT 10;
+````
