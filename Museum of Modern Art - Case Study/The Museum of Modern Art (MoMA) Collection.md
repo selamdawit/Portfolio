@@ -1,5 +1,9 @@
 # MoMA Collection Analysis 🎨
 
+<p align="center">
+  <img src="https://github.com/selamdawit/Portfolio/blob/fd02e350c329e2fa4788a4e84742300868eb257d/Museum%20of%20Modern%20Art%20-%20Case%20Study/starrynightart.jpg" width="100%" height="250" />
+</p>
+
 ## 📌 Solution
 
 ### 1. How many artworks are currently on display?
