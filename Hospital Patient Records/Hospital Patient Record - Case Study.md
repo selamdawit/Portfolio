@@ -139,3 +139,36 @@ FROM (
   GROUP BY PATIENT  
 ) counts;
 ````
+
+**Answer:**
+
+<img width="135" height="82" alt="Image" src="https://github.com/user-attachments/assets/6dc48c83-4c3b-47ae-9cd1-05e5c69b876a" />
+
+<br>
+<br>
+N/A
+<br>
+<br>
+
+
+#### b. What is the average of patient encounters?
+
+````sql
+SELECT 
+  PATIENT,
+  COUNT(*) AS encounter_count
+FROM encounters_raw
+GROUP BY PATIENT
+ORDER BY encounter_count DESC
+LIMIT 10;
+````
+
+**Answer:**
+
+<img width="135" height="82" alt="Image" src="https://github.com/user-attachments/assets/6dc48c83-4c3b-47ae-9cd1-05e5c69b876a" />
+
+<br>
+<br>
+N/A
+<br>
+<br>
