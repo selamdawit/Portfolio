@@ -238,8 +238,9 @@ N/A
 
 ````sql
 SELECT 
-  ROUND(AVG(PAYER_COVERAGE / TOTAL_CLAIM_COST) * 100,2) AS coverage_pct
-FROM encounters_raw;
+  ROUND(AVG(PAYER_COVERAGE / TOTAL_CLAIM_COST) * 100, 2) AS coverage_pct
+FROM encounters_raw
+WHERE TOTAL_CLAIM_COST > 0;
 ````
 
 **Answer:**
