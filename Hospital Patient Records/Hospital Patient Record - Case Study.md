@@ -233,7 +233,7 @@ FROM encounters_raw;
 
 <br>
 <br>
-The average out of pocket cost per encounter, meaning the amount patients pay themselves is 2,524.72.
+The average out of pocket cost per encounter, meaning the amount patients pay themselves, is 2,524.72.
 <br>
 <br>
 
