@@ -188,10 +188,14 @@ ORDER BY total DESC;
 
 **Answer:**
 
-<img width="505" height="204" alt="Image" src="https://github.com/user-attachments/assets/f8c922ef-d6f5-45b6-b108-30654ecfa886" />
+<img width="325" height="151" alt="Image" src="https://github.com/user-attachments/assets/54319be9-b1c2-41a9-abb8-bb67cf6b836e" />
 
 <br>
 <br>
 N/A
 <br>
 <br>
+
+
+
+### 9. What is the typical cost of an encounter?
