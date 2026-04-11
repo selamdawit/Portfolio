@@ -274,7 +274,13 @@ ORDER BY total_encounters DESC;
 
 **Answer:**
 
+<img width="210" height="95" alt="Image" src="https://github.com/user-attachments/assets/b1ea2550-fe7e-44ff-b897-5a319bf6631e" />
+
+<br>
+<br>
 Patients aged 40+ have the highest number of encounters, indicating that older patients use healthcare services more frequently.
+<br>
+<br>
 
 ### 13. Which encounter types are the most expensive?
 
@@ -286,7 +292,6 @@ FROM encounters_raw
 GROUP BY ENCOUNTERCLASS
 ORDER BY avg_cost DESC;
 ````
-
 
 **Answer:**
 
