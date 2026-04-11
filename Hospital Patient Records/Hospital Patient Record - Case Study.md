@@ -151,7 +151,7 @@ N/A
 <br>
 
 
-#### b. What is the average of patient encounters?
+#### b. How often do patients use healthcare services?
 
 ````sql
 SELECT 
@@ -197,5 +197,12 @@ N/A
 <br>
 
 
-
 ### 9. What is the typical cost of an encounter?
+
+````sql
+SELECT 
+  ROUND(AVG(TOTAL_CLAIM_COST),2) AS avg_cost
+FROM encounters_raw;
+````
+
+**Answer:**
