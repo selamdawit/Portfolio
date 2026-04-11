@@ -125,3 +125,17 @@ WHERE Id IS NULL OR BIRTHDATE IS NULL;
 N/A
 <br>
 <br>
+
+
+### 7. How often do patients use healthcare services?
+#### a. What is the average of patient encounters?
+
+````sql
+SELECT  
+ROUND(AVG(encounter_count), 1) AS avg_encounters  
+FROM (  
+  SELECT COUNT(*) AS encounter_count  
+  FROM encounters_raw  
+  GROUP BY PATIENT  
+) counts;
+````
