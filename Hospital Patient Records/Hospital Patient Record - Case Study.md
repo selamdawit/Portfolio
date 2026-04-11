@@ -165,7 +165,30 @@ LIMIT 10;
 
 **Answer:**
 
-<img width="135" height="82" alt="Image" src="https://github.com/user-attachments/assets/6dc48c83-4c3b-47ae-9cd1-05e5c69b876a" />
+<img width="505" height="204" alt="Image" src="https://github.com/user-attachments/assets/f8c922ef-d6f5-45b6-b108-30654ecfa886" />
+
+<br>
+<br>
+N/A
+<br>
+<br>
+
+
+### 8. What types of care are most commonly delivered?
+
+````sql
+SELECT 
+  ENCOUNTERCLASS,
+  COUNT(*) AS total,
+  ROUND(COUNT(*) * 100 / (SELECT COUNT(*) FROM encounters_raw), 2) AS percentage
+FROM encounters_raw
+GROUP BY ENCOUNTERCLASS
+ORDER BY total DESC;
+````
+
+**Answer:**
+
+<img width="505" height="204" alt="Image" src="https://github.com/user-attachments/assets/f8c922ef-d6f5-45b6-b108-30654ecfa886" />
 
 <br>
 <br>
