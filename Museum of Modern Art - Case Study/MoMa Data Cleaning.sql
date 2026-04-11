@@ -5,40 +5,6 @@ Cleaning Data in SQL Queries – MoMA Artists Table 1
 */
 
 
-CREATE DATABASE moma_art;
-
-USE moma_art;
-
---------------------------------------------------------------------------------------------------------------------------
-
--- Create raw table to store imported artist data
-
-
-CREATE TABLE artists_raw (
-  ConstituentID INT PRIMARY KEY,
-  DisplayName TEXT,                
-  ArtistBio TEXT,                
-  Nationality TEXT,               
-  Gender TEXT,                    
-  BeginDate INT,                  
-  EndDate INT,                    
-  `Wiki QID` TEXT,                
-  ULAN TEXT                       
-);
-
-
--- Load Data from CSV File
-
-
-LOAD DATA LOCAL INFILE '/Users/selam/Downloads/MoMA+Art+Collection/Artists.csv'
-INTO TABLE artists_raw
-CHARACTER SET utf8mb4
-FIELDS TERMINATED BY ','
-ENCLOSED BY '"'
-LINES TERMINATED BY '\n'
-IGNORE 1 ROWS;
-
-
 -- Trim and Handle Empty Values in Fields
 
 
@@ -75,56 +41,9 @@ WHERE EndDate = 0;
 
 /*
 
-Cleaning Data in SQL Queries – MoMA Artworks Table 2
+ MoMA Artworks Table 2
 
 */
-
-
-
-CREATE TABLE artworks_raw (
-  Title TEXT,
-  Artist TEXT,
-  ConstituentID TEXT,
-  ArtistBio TEXT,
-  Nationality TEXT,
-  BeginDate TEXT,
-  EndDate TEXT,
-  Gender TEXT,
-  Date TEXT,
-  Medium TEXT,
-  Dimensions TEXT,
-  CreditLine TEXT,
-  AccessionNumber TEXT,
-  Classification TEXT,
-  Department TEXT,
-  DateAcquired TEXT,
-  Cataloged TEXT,
-  ObjectID INT,
-  URL TEXT,
-  ImageURL TEXT,
-  OnView TEXT,
-  `Circumference (cm)` TEXT,
-  `Depth (cm)` TEXT,
-  `Diameter (cm)` TEXT,
-  `Height (cm)` TEXT,
-  `Length (cm)` TEXT,
-  `Weight (kg)` TEXT,
-  `Width (cm)` TEXT,
-  `Seat Height (cm)` TEXT,
-  `Duration (sec.)` TEXT
-);
-
-
--- Load data from CSV
-
-
-LOAD DATA LOCAL INFILE '/Users/selam/Downloads/MoMA+Art+Collection/Artworks.csv'
-INTO TABLE artworks_raw
-CHARACTER SET utf8mb4
-FIELDS TERMINATED BY ','
-ENCLOSED BY '"'
-LINES TERMINATED BY '\n'
-IGNORE 1 ROWS;
 
 
 -- Remove invalid and duplicate rows before adding primary key
