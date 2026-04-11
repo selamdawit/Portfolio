@@ -206,3 +206,95 @@ FROM encounters_raw;
 ````
 
 **Answer:**
+
+<img width="159" height="80" alt="Image" src="https://github.com/user-attachments/assets/778bd3fe-cb34-4376-9303-23426126068e" />
+
+<br>
+<br>
+N/A
+<br>
+<br>
+
+
+### 10. How much do patients pay themselves?
+
+````sql
+SELECT 
+  ROUND(AVG(out_of_pocket_cost),2) AS avg_out_of_pocket
+FROM encounters_raw;
+````
+
+**Answer:**
+
+<img width="159" height="80" alt="Image" src="https://github.com/user-attachments/assets/778bd3fe-cb34-4376-9303-23426126068e" />
+
+<br>
+<br>
+N/A
+<br>
+<br>
+
+### 11. What proportion of costs are covered by insurance?
+
+````sql
+SELECT 
+  ROUND(AVG(PAYER_COVERAGE / TOTAL_CLAIM_COST) * 100,2) AS coverage_pct
+FROM encounters_raw;
+````
+
+**Answer:**
+
+
+### 12. Does healthcare usage vary by age group?
+
+````sql
+SELECT  
+  CASE  
+    WHEN 2026 - YEAR(BIRTHDATE) < 18 THEN 'Under 18'  
+    WHEN 2026 - YEAR(BIRTHDATE) <= 40 THEN '18-40'  
+    ELSE '40+'  
+  END AS age_group,  
+  COUNT(*) AS total_encounters  
+
+FROM patients_raw
+JOIN encounters_raw
+  ON patients_raw.Id = encounters_raw.PATIENT  
+
+GROUP BY age_group  
+ORDER BY total_encounters DESC;
+````
+
+**Answer:**
+
+Patients aged 40+ have the highest number of encounters, indicating that older patients use healthcare services more frequently.
+
+### 13. Which encounter types are the most expensive?
+
+````sql
+SELECT 
+  ENCOUNTERCLASS,
+  ROUND(AVG(TOTAL_CLAIM_COST),2) AS avg_cost
+FROM encounters_raw
+GROUP BY ENCOUNTERCLASS
+ORDER BY avg_cost DESC;
+````
+
+
+**Answer:**
+
+
+### 14. Where are most patients located?
+
+````sql
+SELECT 
+  ZIP,
+  COUNT(*) AS total_patients
+FROM patients_raw
+GROUP BY ZIP
+ORDER BY total_patients DESC
+LIMIT 10;
+````
+
+**Answer:**
+
+### 15. Which areas have the most encounters?
