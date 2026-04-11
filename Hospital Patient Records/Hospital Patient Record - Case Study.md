@@ -295,6 +295,13 @@ ORDER BY avg_cost DESC;
 
 **Answer:**
 
+<img width="256" height="141" alt="Image" src="https://github.com/user-attachments/assets/39d6e401-0397-4413-b96b-7ed714b94469" />
+
+<br>
+<br>
+N/A
+<br>
+<br>
 
 ### 14. Where are most patients located?
 
