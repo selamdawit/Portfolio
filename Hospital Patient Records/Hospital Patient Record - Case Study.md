@@ -1,11 +1,13 @@
 # Hospital Patient Record Analysis 🏥
 
-https://github.com/selamdawit/Portfolio/blob/91b8ae286eaddaebd08ac6aad259cd66e2ab2355/Hospital%20Patient%20Records/dr.jpg
+<p align="center">
+  <img src="https://github.com/selamdawit/Portfolio/blob/91b8ae286eaddaebd08ac6aad259cd66e2ab2355/Hospital%20Patient%20Records/dr.jpg" width="100%" height="250" />
+</p>
 
 ## Objective
 To analyze hospital patient and encounter data to understand patient demographics, healthcare usage, costs, and geographic distribution.
 <br>
-## Solution 📌 
+## Solution 
 
 ### 1. How many patients are in the dataset?
 
