@@ -143,7 +143,7 @@ UPDATE artworks_raw
 SET Nationality_clean = Nationality;
 
 
--- Remove all ()
+-- Remove extra ()
 
 
 UPDATE artworks_raw
@@ -152,7 +152,7 @@ REPLACE(Nationality_clean, '()', '')
 );
 
 
--- Keep everything from the start up to that first )
+-- Remove everything after that first )
 
 UPDATE artworks_raw
 SET Nationality_clean = LEFT(
@@ -241,6 +241,13 @@ SET Gender_clean = CASE
     ELSE Gender_clean -- Leave it alone if it's something else
 END
 WHERE Gender_clean IS NOT NULL;
+
+
+-- Empty strings to null
+
+UPDATE artworks_raw
+SET Gender_clean = NULL
+WHERE Gender_clean = '';
 
 
 
