@@ -1,11 +1,4 @@
-/*
-
-Cleaning Data in SQL Queries – MoMA Artists Table 1
-
-*/
-
-
--- Trim and Handle Empty Values in Fields
+-- MoMA Artists Table 1 : Trim and Handle Empty Values in Fields
 
 
 UPDATE artists_raw
@@ -39,14 +32,7 @@ WHERE EndDate = 0;
 
 
 
-/*
-
- MoMA Artworks Table 2
-
-*/
-
-
--- Remove invalid and duplicate rows before adding primary key
+-- MoMA Artworks Table 2: Remove invalid and duplicate rows before adding primary key
 
 
 DELETE FROM artworks_raw
@@ -79,13 +65,11 @@ SET
   Department = NULLIF(TRIM(Department), '');
 
 
-
 UPDATE artworks_raw
 SET
   ConstituentID = NULLIF(TRIM(ConstituentID), ''),
   URL = NULLIF(TRIM(URL), ''),
   ImageURL = NULLIF(TRIM(ImageURL), '');
-
 
 
 UPDATE artworks_raw
@@ -96,13 +80,11 @@ SET
   DateAcquired = NULLIF(TRIM(DateAcquired), '');
 
 
-
 UPDATE artworks_raw
 SET
   Gender = NULLIF(TRIM(Gender), ''),
   Cataloged = NULLIF(TRIM(Cataloged), ''),
   OnView = NULLIF(TRIM(OnView), '');
-
 
 
 UPDATE artworks_raw
@@ -145,6 +127,121 @@ UPDATE artworks_raw
 SET EndDate = NULL
 WHERE EndDate = '(0)'
    OR EndDate = '(0) (0)';
+
+
+-- Clean nationality column
+
+
+ALTER TABLE artworks_raw
+ADD COLUMN Nationality_clean TEXT;
+
+
+-- Copy original
+
+
+UPDATE artworks_raw
+SET Nationality_clean = Nationality;
+
+
+-- Remove all ()
+
+
+UPDATE artworks_raw
+SET Nationality_clean = TRIM(
+REPLACE(Nationality_clean, '()', '')
+);
+
+
+-- Keep everything from the start up to that first )
+
+UPDATE artworks_raw
+SET Nationality_clean = LEFT(
+Nationality_clean,
+LOCATE(')', Nationality_clean)
+);
+
+
+-- Replace unknown nationality to null
+
+UPDATE artworks_raw
+SET Nationality_clean = NULL
+WHERE Nationality_clean = '(Nationality unknown)';
+
+
+-- Remove brackets ( _ )
+
+UPDATE artworks_raw
+SET Nationality_clean = REPLACE(
+    REPLACE(Nationality_clean, '(', ''),
+    ')', ''
+);
+
+
+-- Clean gender column
+
+
+ALTER TABLE artworks_raw
+ADD COLUMN Gender_clean TEXT;
+
+
+-- Copy original
+
+
+UPDATE artworks_raw
+SET Gender_clean = Gender;
+
+
+-- Remove extra ()
+
+
+UPDATE artworks_raw
+SET Nationality_clean = TRIM(
+REPLACE(Nationality_clean, '()', '')
+);
+
+
+-- Keep everything from the start up to that first )
+
+
+UPDATE artworks_raw
+SET Gender_clean = LEFT(
+Gender_clean,
+LOCATE(')', Gender_clean)
+);
+
+
+-- Standardise
+
+UPDATE artworks_raw
+SET Gender_clean = '(transgender woman)'
+WHERE Gender_clean = '(female (transwoman)';
+
+
+-- Remove ( _ )
+
+
+UPDATE artworks_raw
+SET Gender_clean = TRIM(
+    REPLACE(
+        REPLACE(Gender_clean, '(', ''),
+        ')', '')
+);
+
+
+-- Capitalise first letter
+
+
+UPDATE artworks_raw
+SET Gender_clean = CASE 
+    WHEN LOWER(Gender_clean) LIKE 'm%' THEN 'Male'
+    WHEN LOWER(Gender_clean) LIKE 'f%' THEN 'Female'
+    WHEN LOWER(Gender_clean) LIKE 'n%' THEN 'Non-binary'
+    WHEN LOWER(Gender_clean) LIKE 't%' THEN 'Transgender woman'
+    WHEN LOWER(Gender_clean) LIKE 'g%' THEN 'Gender non-conforming'
+    ELSE Gender_clean -- Leave it alone if it's something else
+END
+WHERE Gender_clean IS NOT NULL;
+
 
 
 -- Convert measurement columns (rounded to 2 decimal places)
