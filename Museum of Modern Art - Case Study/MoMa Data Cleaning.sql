@@ -115,21 +115,218 @@ SET OnView = REPLACE(OnView, '"', '')
 WHERE OnView IS NOT NULL;
 
 
+
+
+
+-- Create copy of begin date column to clean
+
+
+ALTER TABLE artworks_raw
+ADD COLUMN BeginDate_clean TEXT;
+
+UPDATE artworks_raw
+SET BeginDate_clean = BeginDate;
+
+
 -- Replace invalid date 
 
 
 UPDATE artworks_raw
-SET BeginDate = NULL
-WHERE BeginDate = '(0)';
+SET BeginDate_Clean = NULL
+WHERE BeginDate_Clean = '(0)';
+
+
+-- Remove (0) from BeginDate 
 
 
 UPDATE artworks_raw
-SET EndDate = NULL
-WHERE EndDate = '(0)'
-   OR EndDate = '(0) (0)';
+SET BeginDate_Clean = TRIM(REPLACE(BeginDate_Clean, '(0)', ''))
+WHERE BeginDate_Clean LIKE '%(0)%'
+  AND BeginDate_Clean <> '(0)';
 
 
--- Clean nationality column
+-- Find first ) and keep everything from the start
+
+
+UPDATE artworks_raw
+SET BeginDate_Clean = LEFT(BeginDate_Clean, LOCATE(')', BeginDate_Clean))
+WHERE BeginDate_Clean IS NOT NULL
+  AND LOCATE(')', BeginDate_Clean) > 0;
+
+
+-- Empty string to null
+
+
+UPDATE artworks_raw
+SET BeginDate_Clean = NULL
+WHERE BeginDate_Clean = '';
+
+
+-- Remove bracket around date
+
+
+UPDATE artworks_raw
+SET BeginDate_Clean = REPLACE(REPLACE(BeginDate_Clean, '(', ''), ')', '');
+
+
+
+
+
+-- Create copy of end date column to clean
+
+
+ALTER TABLE artworks_raw
+ADD COLUMN EndDate_clean TEXT;
+
+UPDATE artworks_raw
+SET EndDate_clean = EndDate;
+
+
+-- Replace invalid date 
+
+
+UPDATE artworks_raw
+SET EndDate_clean = NULL
+WHERE EndDate_clean = '(0)'
+   OR EndDate_clean = '(0) (0)';
+
+
+UPDATE artworks_raw
+SET EndDate_Clean = TRIM(REPLACE(EndDate_Clean, '(0)', ''))
+WHERE EndDate_Clean LIKE '%(0)%'
+  AND EndDate_Clean <> '(0)';
+
+
+UPDATE artworks_raw
+SET EndDate_Clean = LEFT(EndDate_Clean, LOCATE(')', EndDate_Clean))
+WHERE EndDate_Clean IS NOT NULL
+  AND LOCATE(')', EndDate_Clean) > 0;
+
+
+UPDATE artworks_raw
+SET EndDate_Clean = NULL
+WHERE EndDate_Clean = '';
+
+UPDATE artworks_raw
+SET EndDate_Clean = REPLACE(REPLACE(EndDate_Clean, '(', ''), ')', '');
+
+
+
+
+-- Convert to proper date
+
+
+ALTER TABLE artworks_raw
+ADD COLUMN DateAcquired_clean DATE;
+
+
+UPDATE artworks_raw
+SET DateAcquired_clean = STR_TO_DATE(DateAcquired, '%Y-%m-%d')
+WHERE DateAcquired IS NOT NULL;
+
+
+-- Create an acquired year column for dashboard
+
+
+ALTER TABLE artworks_raw
+ADD COLUMN AcquiredYear INT;
+
+UPDATE artworks_raw
+SET AcquiredYear = YEAR(DateAcquired_clean)
+WHERE DateAcquired_clean IS NOT NULL;
+
+
+
+
+
+-- Create copy of date column to clean
+
+
+ALTER TABLE artworks_raw
+ADD COLUMN Date_clean TEXT;
+
+UPDATE artworks_raw
+SET Date_clean = Date;
+
+
+-- Remove bad values
+
+
+UPDATE artworks_raw
+SET Date_clean = NULL
+WHERE Date_clean IN ('n.d.', 'Unknown', 'Unkown', 'Various');
+
+UPDATE artworks_raw
+SET Date_clean = LOWER(Date_clean);
+
+UPDATE artworks_raw
+SET Date_clean = REPLACE(Date_clean, 'c.', '');
+
+UPDATE artworks_raw
+SET Date_clean = REPLACE(Date_clean, 'ca.', '');
+
+UPDATE artworks_raw
+SET Date_clean = REPLACE(Date_clean, 'before', '');
+
+UPDATE artworks_raw
+SET Date_clean = REPLACE(Date_clean, 'after', '');
+
+UPDATE artworks_raw
+SET Date_clean = REPLACE(Date_clean, 'early', '');
+
+UPDATE artworks_raw
+SET Date_clean = REPLACE(Date_clean, 'late', '');
+
+
+-- Trim Spaces
+
+
+UPDATE artworks_raw
+SET Date_clean = TRIM(Date_clean)
+WHERE Date_clean IS NOT NULL;
+
+
+-- Standardise dashes and .
+
+
+UPDATE artworks_raw
+SET Date_clean = REPLACE(Date_clean, '.', '')
+WHERE Date_clean IS NOT NULL;
+
+UPDATE artworks_raw
+SET Date_clean = TRIM(Date_clean)
+WHERE Date_clean IS NOT NULL;
+
+
+-- Extract first 4 digit year
+
+
+ALTER TABLE artworks_raw
+ADD COLUMN artwork_year INT;
+
+UPDATE artworks_raw
+SET artwork_year =
+    CASE
+        WHEN Date_clean REGEXP '[0-9]{4}'
+        THEN CAST(
+            SUBSTRING(
+                Date_clean,
+                REGEXP_INSTR(Date_clean, '[0-9]{4}'),
+                4
+            ) AS UNSIGNED
+        )
+        ELSE NULL
+    END;
+
+
+ALTER TABLE artworks_raw
+MODIFY COLUMN BeginDate_clean INT;
+
+ALTER TABLE artworks_raw
+MODIFY COLUMN EndDate_clean INT;
+
+
+-- Create copy of nationality column to clean
 
 
 ALTER TABLE artworks_raw
@@ -154,6 +351,7 @@ REPLACE(Nationality_clean, '()', '')
 
 -- Remove everything after that first )
 
+
 UPDATE artworks_raw
 SET Nationality_clean = LEFT(
 Nationality_clean,
@@ -163,12 +361,14 @@ LOCATE(')', Nationality_clean)
 
 -- Replace unknown nationality to null
 
+
 UPDATE artworks_raw
 SET Nationality_clean = NULL
 WHERE Nationality_clean = '(Nationality unknown)';
 
 
 -- Remove brackets ( _ )
+
 
 UPDATE artworks_raw
 SET Nationality_clean = REPLACE(
