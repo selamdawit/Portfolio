@@ -326,6 +326,8 @@ ALTER TABLE artworks_raw
 MODIFY COLUMN EndDate_clean INT;
 
 
+
+
 -- Create copy of nationality column to clean
 
 
