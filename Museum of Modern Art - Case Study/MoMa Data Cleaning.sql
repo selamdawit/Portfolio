@@ -168,7 +168,8 @@ WHERE BeginDate_Clean = '';
 UPDATE artworks_raw
 SET BeginDate_Clean = REPLACE(REPLACE(BeginDate_Clean, '(', ''), ')', '');
 
-
+UPDATE artworks_raw
+SET BeginDate_Clean = ABS(BeginDate_Clean);
 
 
 
