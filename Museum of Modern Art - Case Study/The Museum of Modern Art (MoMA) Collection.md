@@ -6,7 +6,7 @@
 
 ## Dashboard
 
-[Tableau Dashboard](https://public.tableau.com/views/MoMaCollectionDashboard/Dashboard1?:language=en-US&publish=yes&:sid=&:redirect=auth&:display_count=n&:origin=viz_share_link)
+[Tableau](https://public.tableau.com/views/MoMaCollectionDashboard/Dashboard1?:language=en-US&publish=yes&:sid=&:redirect=auth&:display_count=n&:origin=viz_share_link)
 
 ## Solution
 
