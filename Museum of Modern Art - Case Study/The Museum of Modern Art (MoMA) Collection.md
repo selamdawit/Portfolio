@@ -281,6 +281,5 @@ Querying the Photography department only, gelatin silver print is the dominant m
 
 <br>
 
-### 10. How modern are the artworks at the Museum?
-
+### Dashboard
 
