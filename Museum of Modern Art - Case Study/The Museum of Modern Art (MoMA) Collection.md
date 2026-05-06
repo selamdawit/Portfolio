@@ -4,9 +4,12 @@
   <img src="https://github.com/selamdawit/Portfolio/blob/2b4da480fe41db8c897964ec2f6234d2521cfa1f/Museum%20of%20Modern%20Art%20-%20Case%20Study/vangogh.avif" width="100%" height="250" />
 </p>
 
+## Dashboard
+
+[Tableau Dashboard](https://public.tableau.com/views/MoMaCollectionDashboard/Dashboard1?:language=en-US&publish=yes&:sid=&:redirect=auth&:display_count=n&:origin=viz_share_link)
+
 ## Solution
 
-https://public.tableau.com/views/MoMaCollectionDashboard/Dashboard1?:language=en-US&publish=yes&:sid=&:redirect=auth&:display_count=n&:origin=viz_share_link
 
 ### 1. How many artworks are currently on display?
 
