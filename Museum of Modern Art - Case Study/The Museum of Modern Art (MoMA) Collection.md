@@ -6,10 +6,11 @@
 
 ## Dashboard
 
-[Tableau](https://public.tableau.com/views/MoMaCollectionDashboard/Dashboard1?:language=en-US&publish=yes&:sid=&:redirect=auth&:display_count=n&:origin=viz_share_link)
+This interactive Tableau dashboard explores the evolution of The Museum of Modern Art’s (MoMA) permanent collection
+
+[MoMa Collection Dashboard](https://public.tableau.com/views/MoMaCollectionDashboard/Dashboard1?:language=en-US&publish=yes&:sid=&:redirect=auth&:display_count=n&:origin=viz_share_link)
 
 ## Solution
-
 
 ### 1. How many artworks are currently on display?
 
