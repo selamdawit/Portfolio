@@ -27,7 +27,20 @@ There are 974 unique patients in the dataset.
 <br>
 <br>
 
-### 2. What is the average age of patients?
+### 2. How many encounters are in the encounters table?
+
+````sql
+SELECT COUNT(*) AS total_encounters
+FROM encounters_raw;
+````
+
+**Answer:**
+
+
+<br>
+<br>
+
+### 3. What is the average age of patients?
 
 ````sql
 SELECT ROUND(AVG(YEAR(CURDATE()) - YEAR(BIRTHDATE))) AS average_patient_age
@@ -44,7 +57,7 @@ The average patient age in this dataset is 74 years old.
 <br>
 <br>
 
-### 3. What is the age structure of the patient population?
+### 4. What is the age structure of the patient population?
 
 ````sql
 SELECT 
@@ -70,7 +83,7 @@ The majority of patients are aged 65+, with 629 individuals in this group.
 <br>
 
 
-### 4. How diverse is the patient population by race?
+### 5. How diverse is the patient population by race?
 
 ````sql
 SELECT 
@@ -93,7 +106,7 @@ White patients dominate the dataset at 69.82%, while all other racial groups eac
 <br>
 
 
-### 5. What is the gender balance of patients?
+### 6. What is the gender balance of patients?
 
 ````sql
 SELECT 
@@ -115,7 +128,7 @@ The dataset is evenly split by gender, with a slight majority of male patients.
 <br>
 
 
-### 6. Are there missing critical patient records?
+### 7. Are there missing critical patient records?
 
 ````sql
 SELECT COUNT(*) AS missing_ID
@@ -134,7 +147,7 @@ There are no missing patient IDs in the dataset.
 <br>
 
 
-### 7. How often do patients use healthcare services?
+### 8. How often do patients use healthcare services?
 #### a. What is the average of patient encounters?
 
 ````sql
@@ -181,7 +194,7 @@ While the average is 28.6 encounters per patient, some patients have over 1,300 
 <br>
 
 
-### 8. What types of care are most commonly delivered?
+### 9. What types of care are most commonly delivered?
 
 ````sql
 SELECT 
@@ -204,7 +217,7 @@ Ambulatory and outpatient encounters together make up over 67% of all healthcare
 <br>
 
 
-### 9. What is the typical cost of an encounter?
+### 10. What is the typical cost of an encounter?
 
 ````sql
 SELECT 
@@ -223,7 +236,7 @@ The average total claim cost per encounter is 3,639.68.
 <br>
 
 
-### 10. How much do patients pay themselves?
+### 11. How much do patients pay themselves?
 
 ````sql
 SELECT 
@@ -241,7 +254,7 @@ The average out of pocket cost per encounter, meaning the amount patients pay th
 <br>
 <br>
 
-### 11. What proportion of costs are covered by insurance?
+### 12. What proportion of costs are covered by insurance?
 
 ````sql
 SELECT 
@@ -260,7 +273,7 @@ On average, payers cover 32.19% of the total claim cost per encounter.
 <br>
 <br>
 
-### 12. Does healthcare usage vary by age group?
+### 13. Does healthcare usage vary by age group?
 
 ````sql
 SELECT  
@@ -289,7 +302,7 @@ Patients aged 40 and over account for nearly all encounters at 26,690, showing t
 <br>
 <br>
 
-### 13. Which encounter types are the most expensive?
+### 14. Which encounter types are the most expensive?
 
 ````sql
 SELECT 
@@ -310,7 +323,7 @@ Inpatient encounters have the highest average cost at 7,761.35, while outpatient
 <br>
 <br>
 
-### 14. Where are most patients located?
+### 15. Where are most patients located?
 
 ````sql
 SELECT 
@@ -333,7 +346,7 @@ Location data is incomplete in the 'patients' dataset, with 142 patients missing
 <br>
 <br>
 
-### 15. Which areas have the most encounters?
+### 16. Which areas have the most encounters?
 
 ````sql
 SELECT  
