@@ -36,7 +36,11 @@ FROM encounters_raw;
 
 **Answer:**
 
+<img width="175" height="76" alt="Image" src="https://github.com/user-attachments/assets/14137f2a-bed1-4861-af7c-46aa9a41d770" />
 
+<br>
+<br>
+There are 27,891 total encounters in the dataset.
 <br>
 <br>
 
