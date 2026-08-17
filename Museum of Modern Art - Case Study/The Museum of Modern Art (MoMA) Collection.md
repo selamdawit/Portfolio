@@ -264,7 +264,7 @@ ORDER BY total_artworks DESC
 LIMIT 10;
 ````
 
-**Follow up: What are the most common mediums in Painting & Sculpture department?**
+**Follow up: What are the most common mediums in Photography department?**
 
 ````sql
 SELECT
